@@ -6,14 +6,20 @@ root.geometry('1000x400')
 def cipher(event):
     text = txt_int.get(1.0, END)
     K = int(ent_k.get())
-    alphabetA = 'ABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZ'
-    alphabeta = 'abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz'
+    alphabetA = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+    alphabeta = 'abcdefghijklmnopqrstuvwxyz'
     text_res = ''
     for i in text:
         if i in alphabetA:
-            text_res += alphabetA[alphabetA.index(i)+K]
+            if alphabetA.index(i)+K > len(alphabetA):
+                text_res += alphabetA[K - (len(alphabetA)-alphabetA.index(i))]
+            else:
+                text_res += alphabetA[alphabetA.index(i)+K]
         elif i in alphabeta:
-            text_res += alphabeta[alphabeta.index(i)+K]
+            if alphabeta.index(i)+K > len(alphabeta):
+                text_res += alphabeta[K - (len(alphabeta)-alphabeta.index(i))]
+            else:
+                text_res += alphabeta[alphabeta.index(i)+K]
         else:
             text_res += i
     txt_out.delete('1.0', END)
@@ -22,14 +28,20 @@ def cipher(event):
 def cipher_return(event):
     text = txt_out.get(1.0, END)
     K = int(ent_k.get())
-    alphabetA = 'ABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZ'
-    alphabeta = 'abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz'
+    alphabetA = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+    alphabeta = 'abcdefghijklmnopqrstuvwxyz'
     text_res = ''
     for i in text:
         if i in alphabetA:
-            text_res += alphabetA[alphabetA.index(i)-K]
+            if alphabetA.index(i)-K < 0:
+                text_res += alphabetA[len(alphabetA)-(K - alphabetA.index(i))]
+            else:
+                text_res += alphabetA[alphabetA.index(i)-K]
         elif i in alphabeta:
-            text_res += alphabeta[alphabeta.index(i)-K]
+            if alphabeta.index(i)-K < 0:
+                text_res += alphabeta[len(alphabeta)-(K - alphabeta.index(i))]
+            else:
+                text_res += alphabeta[alphabeta.index(i)-K]
         else:
             text_res += i
     txt_int.delete('1.0', END)
