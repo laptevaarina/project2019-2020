@@ -3,23 +3,40 @@ root = Tk()
 root.title('Кодировка шифром Цезаря')
 root.geometry('1000x400')
 
+alphabetA = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+alphabeta = 'abcdefghijklmnopqrstuvwxyz'
+alphabetR = 'АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ'
+alphabetr = 'абвгдеёжзийклмнопрстуфхцчшщъыьэюя'
+
+def encoder(l, alph, k):
+    res = ''
+    if alph.index(l)+k >= len(alph):
+        res += alph[k - (len(alph)-alph.index(l))]
+    else:
+        res += alph[alph.index(l)+k]
+    return res
+
+def decoder(l, alph, k):
+    res = ''
+    if alph.index(l)-k < 0:
+        res += alph[len(alph)-(k - alph.index(l))]
+    else:
+        res += alph[alph.index(l)-k]
+    return res
+
 def cipher(event):
     text = txt_int.get(1.0, END)
     K = int(ent_k.get())
-    alphabetA = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
-    alphabeta = 'abcdefghijklmnopqrstuvwxyz'
     text_res = ''
     for i in text:
         if i in alphabetA:
-            if alphabetA.index(i)+K > len(alphabetA):
-                text_res += alphabetA[K - (len(alphabetA)-alphabetA.index(i))]
-            else:
-                text_res += alphabetA[alphabetA.index(i)+K]
+            text_res += encoder(i, alphabetA, K)
         elif i in alphabeta:
-            if alphabeta.index(i)+K > len(alphabeta):
-                text_res += alphabeta[K - (len(alphabeta)-alphabeta.index(i))]
-            else:
-                text_res += alphabeta[alphabeta.index(i)+K]
+            text_res += encoder(i, alphabeta, K)
+        elif i in alphabetR:
+            text_res += encoder(i, alphabetR, K)
+        elif i in alphabetr:
+            text_res += encoder(i, alphabetr, K)
         else:
             text_res += i
     txt_out.delete('1.0', END)
@@ -28,20 +45,16 @@ def cipher(event):
 def cipher_return(event):
     text = txt_out.get(1.0, END)
     K = int(ent_k.get())
-    alphabetA = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
-    alphabeta = 'abcdefghijklmnopqrstuvwxyz'
     text_res = ''
     for i in text:
         if i in alphabetA:
-            if alphabetA.index(i)-K < 0:
-                text_res += alphabetA[len(alphabetA)-(K - alphabetA.index(i))]
-            else:
-                text_res += alphabetA[alphabetA.index(i)-K]
+            text_res += decoder(i, alphabetA, K)
         elif i in alphabeta:
-            if alphabeta.index(i)-K < 0:
-                text_res += alphabeta[len(alphabeta)-(K - alphabeta.index(i))]
-            else:
-                text_res += alphabeta[alphabeta.index(i)-K]
+            text_res += decoder(i, alphabeta, K)
+        elif i in alphabetR:
+            text_res += decoder(i, alphabetR, K)
+        elif i in alphabetr:
+            text_res += decoder(i, alphabetr, K)
         else:
             text_res += i
     txt_int.delete('1.0', END)
