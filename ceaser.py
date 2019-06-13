@@ -80,6 +80,6 @@ def tests_decoding():
 if __name__ == '__main__':
     tests_coding()
     tests_decoding()
-    print(cipher('Я хочу сдать ЕГЭ на 100 баллов)))', 12))
+
 
 
