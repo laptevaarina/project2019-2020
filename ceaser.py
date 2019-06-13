@@ -63,7 +63,23 @@ def tests_coding():
     result = 'Щътлоь, фйф лйвт нохй?'
     print('Ok' if cipher(text, key) == result else 'Fail')
 
+def tests_decoding():
+    '''Функция для тестирования декодирования по шифру Цезаря'''
+    print(tests_decoding.__doc__)
+
+    print("testcase #1: ", end='')
+    text, key = 'Х стёяр жтзтр!!!', 4
+    result = 'С новым годом!!!'
+    print('Ok' if cipher_return(text, key) == result else 'Fail')
+
+    print("testcase #2: ", end='')
+    text, key = 'К бъгя эплюз РОИ щл 100 млччън)))', 12
+    result = 'Я хочу сдать ЕГЭ на 100 баллов)))'
+    print('Ok' if cipher_return(text, key) == result else 'Fail')
+
 if __name__ == '__main__':
     tests_coding()
+    tests_decoding()
+    print(cipher('Я хочу сдать ЕГЭ на 100 баллов)))', 12))
 
 
